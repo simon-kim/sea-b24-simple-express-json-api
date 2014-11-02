@@ -5,13 +5,31 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jscs');
   grunt.loadNpmTasks('grunt-simple-mocha');
 
-  // TODO: add in jshint, jscs, and mocha config options below
-  // reference the READMEs for grunt-contrib-jshint, grunt-contrib-jscs, and
-  // grunt-simple-mocha
   grunt.initConfig({
+    jshint: {
+      options: {
+        jshintrc: true
+      },
+      all: ['Gruntfile.js', 'api_test.js', 'server.js']
+    },
 
+    jscs: {
+      all: {
+        options: {
+          'standard': 'airbnb',
+          jscsrc: true
+        },
+        files: {
+          src: ['Gruntfile.js', 'server.js']
+        }
+      }
+    },
+
+    simplemocha: {
+      all: ['test/*.js']
+    }
   });
 
-  grunt.registerTask('test', ['jshint', 'simplemocha']);
+  grunt.registerTask('test', ['jshint', 'jscs', 'simplemocha']);
   grunt.registerTask('default',  ['test']);
 };
